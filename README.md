@@ -5,7 +5,7 @@ The goal of this project is to give to anybody the possibility to have an immers
  Detailed description :
    - The goal is to control a Tello drone using the heading of your head, and have the video stream of the Tello in a VR headset.
    - For this purpose, we will use a sensor which return some datas as quaternion to an Arduino with the I2C protocol.
-   - The Arduino will then return Tait-Bryan angles (ZYX intrinsic convention) to the computer trough the serial port.(see https://en.wikipedia.org/wiki/Euler_angles if you want to understand in details) ![alt text](image-1.png)![alt text](image-2.png)![alt text](image-3.png).
+   - The Arduino will then return Tait-Bryan angles (ZYX intrinsic convention) to the computer trough the serial port.(see https://en.wikipedia.org/wiki/Euler_angles if you want to understand in details) ![alt text](images/image-1.png)![alt text](images/image-2.png)![alt text](images/image-3.png).
    - On the computer, the python code will gather the angular data from the serial port thanks to the Python library PySerial, define an initial position of the head, and then compute a tilt relative to the initial position when you will be moving the sensor.
    - The relative heading will then be used to trigger commands for the Tello, the advantage of using `send_rc_control` method from the djitellopy lib is that no feedback from the drone is expected thus the code execution is not slowed down by any wait time.
    - Always in the python code, the UDP video stream from the Tello will be piped to another UDP port
@@ -21,7 +21,7 @@ List of everything you need :
  - A usb wifi antenna
 
 Steps :
-1. Wire the two switchs as shown on the diagram : ![alt text](image.png) - these switch will make the drone moving forward or backwards when the corresponding switch is pressed, if both switchs are pressed, nothing will happen.
+1. Wire the two switchs as shown on the diagram : ![alt text](images/image.png) - these switch will make the drone moving forward or backwards when the corresponding switch is pressed, if both switchs are pressed, nothing will happen.
 2. Edit in the Arduino code `quaternion_yaw_pitch_roll.ino` the pins wired to the switchs (be aware that for a pin number written on the arduino,  its pin number in the code might not be the same, otherwise you could encounter some watchdog errors, look for any pinout for your Arduino on the net)
 3. Edit the COM port in the file `main.py`
 4. Run the bat file `run.bat`
