@@ -19,6 +19,7 @@ def rc_control(tello):
     while True:
         img = tello.get_frame_read().frame
         RGB_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        show
         forward_backward = 0
         left_right = 0
         up_down = 0

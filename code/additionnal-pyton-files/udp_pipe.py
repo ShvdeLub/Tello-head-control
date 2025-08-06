@@ -9,7 +9,7 @@ def forward_video_stream():
     
     # Connect to the Tello drone
     tello.connect()
-
+    tello.query_battery()  # Check battery status
     # Start the video stream
     tello.streamon()
 
