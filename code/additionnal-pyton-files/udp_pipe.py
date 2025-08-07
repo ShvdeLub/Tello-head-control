@@ -1,4 +1,6 @@
 import socket
+import time
+import struct   
 from djitellopy import Tello
 import threading
 
@@ -28,9 +30,14 @@ def forward_video_stream():
         while True:
             # Receive the video frame from Tello
             frame, _ = recv_sock.recvfrom(65536)  # Buffer size is 2048 bytes
-            
-            # Forward the frame to the other UDP port
+            timestamp = time.time()
+
+            # Pack timestamp as double (8 bytes) + raw frame
+            payload = struct.pack('d', timestamp)
+
             send_sock.sendto(frame, send_address)
+            # Forward the frame to the other UDP port
+            #send_sock.sendto(payload, ('127.0.0.1',22333))
     except KeyboardInterrupt:
         print("Stream forwarding stopped")
     finally:
