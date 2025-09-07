@@ -1,12 +1,13 @@
 #include <Arduino.h>
 #include <Adafruit_BNO08x.h>
 
+
 struct euler_t {
   float yaw;
   float pitch;
   float roll;
 } ypr;
-
+#define BNO08X_RESET -1
 Adafruit_BNO08x  bno08x(BNO08X_RESET);
 sh2_SensorValue_t sensorValue;
 
@@ -26,7 +27,7 @@ void setReports(sh2_SensorId_t reportType, long report_interval) {
   }
 }
 String str = "";
-void(* resetFunc) (void) = 0;
+//void(* resetFunc) (void) = 0;
 void setup(void) {
   pinMode(12, INPUT); // Edit the pin number
   pinMode(13, INPUT); // Edit the pin number
@@ -39,6 +40,7 @@ void setup(void) {
   //if (!bno08x.begin_UART(&Serial1)) {  // Requires a device with > 300 byte UART buffer!
   //if (!bno08x.begin_SPI(BNO08X_CS, BNO08X_INT)) {
     Serial.println("Failed to find BNO08x chip");
+    ESP.restart();
     while (1) { delay(10); }
   }
   Serial.println("BNO08x Found!");
@@ -78,9 +80,9 @@ void quaternionToEulerGI(sh2_GyroIntegratedRV_t* rotational_vector, euler_t* ypr
 
 void loop() {
   if (Serial.available()) {
-    String command = Serial.readStringUntil('\n');
-    if (command == "RESET") {
-      resetFunc(); // Appelle la fonction de réinitialisation
+    String command = Serial.readString();
+    if (command.equals("RESET\n")) {
+      ESP.restart(); // Appelle la fonction de réinitialisation 
     }
   }
   if (bno08x.wasReset()) {

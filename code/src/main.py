@@ -6,7 +6,7 @@ from djitellopy import Tello
 import threading
 
 # Read data on the serial port
-arduino = serial.Serial(port='COM4',  baudrate=115200, timeout=.1) # Change the COM port if needed
+arduino = serial.Serial(port='COM3',  baudrate=115200, timeout=.1) # Change the COM port if needed
 arduino.write(b'RESET\n')
 
 def read(arduino):
